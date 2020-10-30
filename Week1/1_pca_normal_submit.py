@@ -23,7 +23,7 @@ def PCA(data, sort=True):
 
 
 # Path management issues
-file_name = 'car_0001.txt'
+file_name = 'car_0002.txt'
 path2folder = os.path.dirname(__file__)
 path2datafile = os.path.join(path2folder, '../data', file_name)
 
@@ -54,7 +54,7 @@ lines = [[0, 1], [0, 2], [0, 3]]
 colors = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
 line_set = o3d.geometry.LineSet(points=o3d.utility.Vector3dVector(point), lines=o3d.utility.Vector2iVector(lines))
 line_set.colors = o3d.utility.Vector3dVector(colors)
-#o3d.visualization.draw_geometries([point_cloud_o3d, line_set])
+o3d.visualization.draw_geometries([point_cloud_o3d, line_set])
 
 # Calculate surface normals
 pcd_tree = o3d.geometry.KDTreeFlann(point_cloud_o3d)
@@ -65,11 +65,12 @@ for i in range(len(points_array)):
     [_, idx, _] = pcd_tree.search_knn_vector_3d(point_cloud_o3d.points[i], n_neighbors)
     k_nearest_point = np.asarray(point_cloud_o3d.points)[idx, :]
     w, v = PCA(k_nearest_point)
+    # Add normal vector
     normals.append(v[:, 2])
 
 normals = np.array(normals, dtype=np.float64)
 point_cloud_o3d.normals = o3d.utility.Vector3dVector(normals)
-#o3d.visualization.draw_geometries([point_cloud_o3d])
+o3d.visualization.draw_geometries([point_cloud_o3d])
 
 
 

@@ -65,7 +65,7 @@ def voxel_filter(point_cloud, leafsize):
 
 
 # Path management issues
-file_name = 'car_0005.txt'
+file_name = 'car_0002.txt'
 path2folder = os.path.dirname(__file__)
 path2datafile = os.path.join(path2folder, '../data', file_name)
 
