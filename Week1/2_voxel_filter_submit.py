@@ -12,6 +12,13 @@ def compute_centroid(point_indices, point_cloud):
     centroid = np.asarray([x, y, z])
     return centroid
 
+# Function for random point selection
+def compute_random(point_indices, point_cloud):
+    n_number = len(point_indices)
+    index = np.random.randint(n_number)
+    random_point = point_cloud[point_indices[index]]
+    return random_point
+
 # Function for voxel grid downsampling
 def voxel_filter(point_cloud, leafsize):
     # Initialize output
@@ -48,8 +55,9 @@ def voxel_filter(point_cloud, leafsize):
         else:
             # Collect all indices of point which have same hvalue
             point_indices = index_ordered[start_index:i + 1]
-            centroid = compute_centroid(point_indices, point_cloud)
-            filtered_cloud.append(centroid)
+            #sample_point = compute_centroid(point_indices, point_cloud)
+            sample_point = compute_random(point_indices, point_cloud)
+            filtered_cloud.append(sample_point)
             start_index = i
 
     filtered_points = np.asarray(filtered_cloud)
@@ -57,7 +65,7 @@ def voxel_filter(point_cloud, leafsize):
 
 
 # Path management issues
-file_name = 'car_0002.txt'
+file_name = 'car_0005.txt'
 path2folder = os.path.dirname(__file__)
 path2datafile = os.path.join(path2folder, '../data', file_name)
 
